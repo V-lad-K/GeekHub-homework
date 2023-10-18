@@ -2,10 +2,6 @@
 # script must print out result of concatenating all <number> strings.
 
 number = int(input("input number: "))
-string = ""
+string_list = [input("input string: ") for element in range(number)]
 
-for i in range(number):
-    input_string = input("input string: ")
-    string += input_string
-
-print(string)
+print(''.join(string_list))
