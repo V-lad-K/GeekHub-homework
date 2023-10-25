@@ -10,19 +10,17 @@ my_dict = {
     'key7': (5, 2),
     'key8': (4, 5, 6),
     'key9': "banana",
-    'key10': "apple",
+    'key10': "apple"
 }
 
-int_values = [value for value in my_dict.values() if isinstance(value, int)]
-float_values = [value for value in my_dict.values() if isinstance(value, float)]
+number_values = [value for value in my_dict.values() if isinstance(value, (int, float))]
 string_values = [value for value in my_dict.values() if isinstance(value, str)]
-list_values = [value for value in my_dict.values() if isinstance(value, list)]
-tuple_values = [value for value in my_dict.values() if isinstance(value, tuple)]
-set_values = [value for value in my_dict.values() if isinstance(value, set)]
+collections_values = [value for value in my_dict.values() if isinstance(value, (list, tuple, set))]
 
-general = [int_values, float_values, string_values, list_values, tuple_values, set_values]
-
-for element in general:
+for element in [number_values, string_values, collections_values]:
     if len(element) > 0:
-        print(f"max {type(max(element))} ", max(element))
-        print(f"min {type(min(element))} ", min(element))
+        minimum = min(element, key=lambda x: min(x)) if isinstance(element[0], (list, tuple, set)) else min(element)
+        maximum = max(element, key=lambda x: max(x)) if isinstance(element[0], (list, tuple, set)) else max(element)
+
+        print(f"{type(maximum)}, {maximum}")
+        print(f"{type(minimum)}, {minimum}")

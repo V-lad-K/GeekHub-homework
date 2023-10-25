@@ -4,5 +4,5 @@
 values = [(1, 2, 3), (4, 5, 6), (7, 8), (9, ), ("a", "b"), ()]
 change_value = input("input value: ")
 
-values = [element[:-1] + (change_value,) if len(element) > 0 else () for element in values]
+values = [element[:-1] + (change_value,) if element else () for element in values]
 print(values)
