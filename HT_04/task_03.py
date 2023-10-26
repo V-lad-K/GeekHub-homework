@@ -7,7 +7,7 @@ class InvalidAgeException(Exception):
 
 try:
     number = int(input("input your age "))
-    if 18 < number or number > 120:
+    if not (18 <= number <= 120):
         raise InvalidAgeException
 except InvalidAgeException:
     print("Invalid Age")

@@ -5,11 +5,8 @@
 while True:
     try:
         number = input("input number ")
-        if not number.isdigit():
-            raise ValueError
-        else:
-            print("number", int(number))
-            break
+        print("number ", int(number))
+        break
     except ValueError:
         print("number is not int ")
         continue
