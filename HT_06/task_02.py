@@ -10,7 +10,8 @@ class NegativeArguments(Exception):
     pass
 
 
-def bank(deposit_argument, years_argument, percent_argument=0.1):
+def bank(deposit_argument, years_argument, percent_argument=10.0):
+    percent_argument /= 100
     for i in range(years_argument):
         deposit_argument += deposit_argument*percent_argument
 
@@ -20,7 +21,7 @@ def bank(deposit_argument, years_argument, percent_argument=0.1):
 try:
     deposit = float(input("input deposit "))
     years = int(input("input number of years "))
-    percent = float(input("input percent ")) / 100
+    percent = float(input("input percent "))
 
     if deposit < 0 or years < 0 or percent < 0:
         raise NegativeArguments
