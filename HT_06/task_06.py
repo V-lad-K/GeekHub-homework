@@ -10,12 +10,13 @@
 def shifter(list_argument, shift):
     if shift > 0:
         length = len(list_argument)
-
         return list_argument[length - shift:] + list_argument[:length - shift]
     elif shift < 0:
-        return list_argument[shift:] + list_argument[:shift]
+        length = len(list_argument)
+        position = abs(shift) % length
+        return list_argument[position:] + list_argument[:position]
     else:
         return list_argument
 
 
-print(shifter([1, 2, 3, 4, 5], 1))
+print(shifter([1, 2, 3, 4, 5], -2))

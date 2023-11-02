@@ -10,7 +10,9 @@ def get_identical_element(list_argument):
     new_dict = {}
     new_dict = {str(char): list_argument.count(char)
                 for char in list_argument if str(char) not in new_dict}
-    return "number of repetitions of each character ", new_dict
+
+    result = ', '.join(f"{key} ----> {value}" for key, value in new_dict.items())
+    return result
 
 
 print(get_identical_element([1, 1, 'foo', [1, 2], True, 'foo', 1, [1, 2]]))
