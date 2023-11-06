@@ -32,7 +32,7 @@ def morse_code(string_argument):
     }
 
     words = string_argument.split("   ")
-    result = ""
+    symbols_list = []
 
     for item in words:
         letters = item.split()
@@ -40,10 +40,10 @@ def morse_code(string_argument):
         for letter in letters:
             if validation(string_argument):
                 raise InvalidSymbol("input string has not allow symbols")
-            result += morse_dict[letter]
-        result += " "
+            symbols_list.append(morse_dict[letter])
+        symbols_list.append(" ")
 
-    return result
+    return "".join(symbols_list)
 
 
 try:
