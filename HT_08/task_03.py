@@ -25,7 +25,7 @@ def my_range(start=0, stop=None, step=1):
 
     if step > 0:
         while start < stop:
-            print(start)
+            yield start
             start += step
     elif step < 0:
         while start > stop:
