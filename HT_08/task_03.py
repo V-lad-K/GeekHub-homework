@@ -18,41 +18,25 @@ class InvalidGenerator(Exception):
     pass
 
 
-def range_generator(*args):
-    length_args = len(args)
-
-    match length_args:
-        case 1:
-            start = 0
-            stop = args[0]
-            step = 1
-        case 2:
-            start = args[0]
-            stop = args[1]
-            step = 1
-        case 3:
-            start = args[0]
-            stop = args[1]
-            step = args[2]
-            if step == 0:
-                raise InvalidGenerator("step must not be zero")
-        case _:
-            raise InvalidGenerator("0 arguments")
+def my_range(start=0, stop=None, step=1):
+    if stop is None:
+        stop = start
+        start = 0
 
     if step > 0:
         while start < stop:
-            yield start
+            print(start)
             start += step
     elif step < 0:
         while start > stop:
             yield start
             start += step
+    else:
+        raise InvalidGenerator("step can't be 0")
 
 
 try:
-    for item in range_generator(1, 0):
-        print(item)
+    for i in my_range(0, -10, -1):
+        print(i)
 except InvalidGenerator as e:
     print(str(e))
-except ValueError as e:
-    print("arguments must be int")
