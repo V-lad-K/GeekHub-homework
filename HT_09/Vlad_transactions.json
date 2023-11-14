@@ -1,0 +1,12 @@
+[
+  {
+    "type": "replenishment",
+    "amount": 1000.0,
+    "balance": "2000.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 500.0,
+    "balance": "1500.0"
+  }
+]
