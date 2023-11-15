@@ -17,6 +17,15 @@ def get_join_file_string(file):
     return "".join(text_list)
 
 
+def get_middle(string, count):
+    diff = len(string) - count
+
+    start = int(diff / 2) if diff % 2 == 0 else int(diff / 2) + 1
+    end = start + count if diff % 2 == 0 else start + count - 1
+
+    return string[start:end]
+
+
 def get_blocks(file_name, count):
     try:
         with open(file_name, 'r', encoding='utf-8') as f:
@@ -27,19 +36,8 @@ def get_blocks(file_name, count):
                 print("The number of characters exceeds the file length.")
                 return
 
-            middle_index = file_length // 2
-
-            if file_length % 2 == 0:
-                add_index = 0
-            else:
-                if count % 2 == 0:
-                    add_index = -1
-                else:
-                    add_index = 1
-
             start_block = file_text[:count]
-            middle_block = file_text[middle_index - count // 2:
-                                     middle_index + count // 2 + add_index]
+            middle_block = get_middle(file_text, count)
             end_block = file_text[-count:]
 
             print("start:", start_block)
@@ -50,4 +48,7 @@ def get_blocks(file_name, count):
         print("File not found")
 
 
-get_blocks("task_02_test_1.txt", 1)
+get_blocks("task_02_test_1.txt", 3)
+get_blocks("task_02_test_1.txt", 4)
+get_blocks("task_02_test_1.txt", 5)
+
