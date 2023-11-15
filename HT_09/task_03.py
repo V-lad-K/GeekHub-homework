@@ -163,14 +163,19 @@ def start():
 
     except InvalidUser as e:
         print(str(e))
+        get_command_action(name)
     except NegativeBalance as e:
         print(str(e))
+        get_command_action(name)
     except InvalidAction as e:
         print(str(e))
+        get_command_action(name)
     except ValueError:
         print("value must be number")
+        get_command_action(name)
     except NegativeField as e:
         print(str(e))
+        get_command_action(name)
 
 
 start()

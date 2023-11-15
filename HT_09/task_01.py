@@ -22,7 +22,7 @@
 
 import time
 
-colours = ["Red", "Yellow", "Green"]
+colours = ["Red", "Yellow", "Green", "Yellow"]
 
 
 def emulator():

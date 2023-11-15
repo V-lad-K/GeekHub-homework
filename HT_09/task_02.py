@@ -29,9 +29,14 @@ def get_blocks(file_name, count):
 
             middle_index = file_length // 2
 
+            if file_length % 2 == 0:
+                add_index = 0
+            else:
+                add_index = 1
+
             start_block = file_text[:count]
             middle_block = file_text[middle_index - count // 2:
-                                     middle_index + count // 2]
+                                     middle_index + count // 2 + add_index]
             end_block = file_text[-count:]
 
             print("start:", start_block)
