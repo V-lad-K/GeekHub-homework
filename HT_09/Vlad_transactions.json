@@ -13,5 +13,60 @@
     "type": "replenishment",
     "amount": 500.0,
     "balance": "2000.0"
+  },
+  {
+    "type": "replenishment",
+    "amount": 0.0,
+    "balance": "2000.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 0.0,
+    "balance": "2000.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 0.0,
+    "balance": "2000.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 0.0,
+    "balance": "2000.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 50.0,
+    "balance": "1950.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 50.0,
+    "balance": "1900.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 50.0,
+    "balance": "1850.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 50.0,
+    "balance": "1800.0"
+  },
+  {
+    "type": "withdrawal",
+    "amount": 50.0,
+    "balance": "1750.0"
+  },
+  {
+    "type": "replenishment",
+    "amount": 50.0,
+    "balance": "1800.0"
+  },
+  {
+    "type": "replenishment",
+    "amount": 50.0,
+    "balance": "1850.0"
   }
 ]

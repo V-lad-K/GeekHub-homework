@@ -32,7 +32,10 @@ def get_blocks(file_name, count):
             if file_length % 2 == 0:
                 add_index = 0
             else:
-                add_index = 1
+                if count % 2 == 0:
+                    add_index = -1
+                else:
+                    add_index = 1
 
             start_block = file_text[:count]
             middle_block = file_text[middle_index - count // 2:
@@ -47,4 +50,4 @@ def get_blocks(file_name, count):
         print("File not found")
 
 
-get_blocks("task_02_test_1.txt", 3)
+get_blocks("task_02_test_1.txt", 1)
