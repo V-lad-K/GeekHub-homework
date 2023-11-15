@@ -163,7 +163,6 @@ def start():
 
     except InvalidUser as e:
         print(str(e))
-        get_command_action(name)
     except NegativeBalance as e:
         print(str(e))
         get_command_action(name)
