@@ -121,9 +121,42 @@ def take_balance(name):
     set_user_balance(name, "withdrawal", deposit_amount, new_balance)
 
 
+# def get_command_action(name):
+#     try:
+#         while True:
+#             action = int(input("""Введіть дію:
+#                        1. Продивитись баланс
+#                        2. Поповнити баланс
+#                        3. Зняти гроші
+#                        4. Вихід
+#                    """))
+#
+#             match action:
+#                 case 1:
+#                     print(get_user_balance(name))
+#                 case 2:
+#                     replenish_balance(name)
+#                 case 3:
+#                     take_balance(name)
+#                 case 4:
+#                     break
+#                 case _:
+#                     raise InvalidAction("a non-existent action is entered")
+#     except NegativeBalance as e:
+#         print(str(e))
+#         get_command_action(name)
+#     except InvalidAction as e:
+#         print(str(e))
+#         get_command_action(name)
+#     except ValueError:
+#         print("value must be number")
+#         get_command_action(name)
+#     except NegativeField as e:
+#         print(str(e))
+#         get_command_action(name)
 def get_command_action(name):
-    try:
-        while True:
+    while True:
+        try:
             action = int(input("""Введіть дію:
                        1. Продивитись баланс
                        2. Поповнити баланс
@@ -142,18 +175,18 @@ def get_command_action(name):
                     break
                 case _:
                     raise InvalidAction("a non-existent action is entered")
-    except NegativeBalance as e:
-        print(str(e))
-        get_command_action(name)
-    except InvalidAction as e:
-        print(str(e))
-        get_command_action(name)
-    except ValueError:
-        print("value must be number")
-        get_command_action(name)
-    except NegativeField as e:
-        print(str(e))
-        get_command_action(name)
+        except NegativeBalance as e:
+            print(str(e))
+            continue
+        except InvalidAction as e:
+            print(str(e))
+            continue
+        except ValueError:
+            print("value must be number")
+            continue
+        except NegativeField as e:
+            print(str(e))
+            continue
 
 
 def login_validation(name_argument, password_argument):
