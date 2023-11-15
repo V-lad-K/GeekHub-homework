@@ -51,4 +51,3 @@ def get_blocks(file_name, count):
 get_blocks("task_02_test_1.txt", 3)
 get_blocks("task_02_test_1.txt", 4)
 get_blocks("task_02_test_1.txt", 5)
-
