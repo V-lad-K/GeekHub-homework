@@ -18,10 +18,11 @@ def get_join_file_string(file):
 
 
 def get_middle(string, count):
+
     diff = len(string) - count
 
     start = int(diff / 2) if diff % 2 == 0 else int(diff / 2) + 1
-    end = start + count if diff % 2 == 0 else start + count - 1
+    end = start + count
 
     return string[start:end]
 
@@ -48,8 +49,4 @@ def get_blocks(file_name, count):
         print("File not found")
 
 
-get_blocks("task_02_test_1.txt", 1)
-get_blocks("task_02_test_1.txt", 2)
-get_blocks("task_02_test_1.txt", 3)
 get_blocks("task_02_test_1.txt", 4)
-get_blocks("task_02_test_1.txt", 5)
