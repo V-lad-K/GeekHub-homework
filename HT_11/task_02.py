@@ -4,14 +4,6 @@
 # show_all_information. Створіть 2 екземпляри класу Person та в кожному
 # з екземплярів створіть атребут profession (його не має інсувати під час ініціалізації).
 
-class InvalidName(Exception):
-    pass
-
-
-class InvalidAge(Exception):
-    pass
-
-
 class Person:
     def __init__(self, name: str, age: float):
         self.name = name
