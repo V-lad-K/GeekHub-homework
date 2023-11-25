@@ -26,34 +26,31 @@ class Calc:
     def __init__(self):
         """initialization"""
         self.last_result = None
-        self.results = [None]
+        self.result = None
 
     def addition(self, number_1, number_2):
         """
             returns the sum of two values
         """
-
-        addition_result = number_1 + number_2
-        self.set_last_result(addition_result)
-        return addition_result
+        self.last_result = self.result
+        self.result = number_1 + number_2
+        return self.result
 
     def subtraction(self, number_1, number_2):
         """
             returns the difference between two values
         """
-
-        subtraction_result = number_1 - number_2
-        self.set_last_result(subtraction_result)
-        return subtraction_result
+        self.last_result = self.result
+        self.result = number_1 - number_2
+        return self.result
 
     def multiplication(self, number_1, number_2):
         """
             returns the product of two values
         """
-
-        multiplication_result = number_1 * number_2
-        self.set_last_result(multiplication_result)
-        return multiplication_result
+        self.last_result = self.result
+        self.result = number_1 * number_2
+        return self.result
 
     def division(self, number_1, number_2):
         """
@@ -62,18 +59,10 @@ class Calc:
 
         if number_2 == 0:
             raise ZeroDivision("division on 0")
-        division_result = number_1 / number_2
-        self.set_last_result(division_result)
-        return division_result
 
-    def set_last_result(self, result):
-        """
-            set new last_result
-        """
-
-        self.results.append(result)
-        self.last_result = self.results[-2]
-        print("self.last_result", self.last_result)
+        self.last_result = self.result
+        self.result = number_1 / number_2
+        return self.result
 
 
 try:

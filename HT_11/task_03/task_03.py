@@ -3,16 +3,22 @@
 # на баланс при створенні нового користувача.
 
 from database import Database
-from exceptions import (InvalidUser, NegativeBalance, InvalidAction,
+from exceptions import (InvalidUser,
+                        NegativeBalance,
+                        InvalidAction,
                         NegativeField)
 
 from validations import Validation
 
 
-class CashMachine(Database, Validation):
+class CashMachine:
+    def __init__(self):
+        self.databese = Database()
+        self.validation = Validation()
+
     def replenish_balance(self, name):
         deposit_amount = float(input("input the amount you want to deposit: "))
-        minimum_denomination = self.get_minimum_denomination()
+        minimum_denomination = self.databese.get_minimum_denomination()
         rest = deposit_amount % minimum_denomination
 
         if deposit_amount < 0:
@@ -20,15 +26,16 @@ class CashMachine(Database, Validation):
         if rest != 0:
             print("take the rest of ", rest)
 
-        balance = self.get_user_balance(name)
+        balance = self.databese.get_user_balance(name)
         new_balance = str(balance + deposit_amount - rest)
-        self.set_user_balance(name, "replenishment", deposit_amount, new_balance)
+        self.databese.set_user_balance(name, "replenishment", deposit_amount,
+                                       new_balance)
 
     def take_balance(self, name):
         amount = float(input("input the amount you want to take: "))
-        balance = self.get_user_balance(name)
+        balance = self.databese.get_user_balance(name)
         get_money = 0
-        cash_machine = self.get_cash_machine()
+        cash_machine = self.databese.get_cash_machine()
 
         if amount < 0:
             raise NegativeField("withdrawal amount must be positive")
@@ -45,13 +52,14 @@ class CashMachine(Database, Validation):
 
         if amount == 0:
             new_balance = balance - get_money
-            self.change_cash_machine(cash_machine)
-            self.set_user_balance(name, "withdrawalad", get_money, new_balance)
+            self.databese.change_cash_machine(cash_machine)
+            self.databese.set_user_balance(name, "withdrawalad", get_money,
+                                           new_balance)
         else:
             raise InvalidAction("cash_machine has not enough money or banknotes")
 
     def change_number_banknote(self):
-        cash_machine = self.get_cash_machine()
+        cash_machine = self.databese.get_cash_machine()
 
         for value, count in cash_machine.items():
             while True:
@@ -71,7 +79,7 @@ class CashMachine(Database, Validation):
                                 if new_count_banknote < 0:
                                     raise NegativeField("negative new count")
                                 cash_machine[value] = new_count_banknote
-                                self.change_cash_machine(cash_machine)
+                                self.databese.change_cash_machine(cash_machine)
                                 break
 
                             except InvalidAction as e:
@@ -112,16 +120,16 @@ class CashMachine(Database, Validation):
 
     def user_command(self, name):
         while True:
-            action = int(input("""Введіть дію:
-                                   1. Продивитись баланс
-                                   2. Поповнити баланс
-                                   3. Зняти гроші
-                                   4. Вихід
-                               """))
+            action = int(input("""Enter action  :
+                               1. Check the balance
+                               2. Top up the balance
+                               3. Withdraw money
+                               4. Exit
+                           """))
 
             match action:
                 case 1:
-                    print(self.get_user_balance(name))
+                    print(self.databese.get_user_balance(name))
                 case 2:
                     self.replenish_balance(name)
                 case 3:
@@ -141,7 +149,7 @@ class CashMachine(Database, Validation):
 
             match action:
                 case 1:
-                    print(self.get_cash_machine())
+                    print(self.databese.get_cash_machine())
                 case 2:
                     self.change_number_banknote()
                 case 3:
@@ -186,35 +194,41 @@ class CashMachine(Database, Validation):
 
     def login(self):
         try:
-            for attempt in range(1, 4):
+            for attempt in range(3):
                 name = input("input username: ")
                 password = input("input password: ")
 
-                if self.is_admin(name):
+                if not self.validation.login_validation(name, password):
+                    print("user is not exist")
+                    continue
+                if self.validation.is_admin(name):
                     self.get_command(self.admin_panel, name)
                     break
-                if self.login_validation(name, password) and not self.is_admin(name):
+                if (self.validation.login_validation(name, password)
+                        and not self.validation.is_admin(name)):
                     self.get_command(self.user_command, name)
                     break
-                if not self.login_validation(name, password) and attempt == 3:
-                    raise InvalidUser("user or password are invalid")
 
         except InvalidUser as e:
             print(str(e))
 
     def create_user(self):
+        count = 0
         while True:
+            count += 1
             try:
                 name = input("input username: ")
                 password = input("input password: ")
 
-                if self.create_user_validation(name, password):
-                    self.add_user_db(name, password)
+                if self.validation.create_user_validation(name, password):
+                    self.databese.add_user_db(name, password)
                     print("user has been added")
                     self.get_command(self.user_command, name)
                 break
             except InvalidUser as e:
                 print(str(e))
+                if count == 3:
+                    break
 
     def start(self):
         self.get_command(self.start_command)

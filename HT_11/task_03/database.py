@@ -21,9 +21,12 @@ class Database:
     @staticmethod
     def get_cash_machine():
         with connection:
-            cursor = connection.execute('SELECT value, count FROM cash_machine')
-            users = cursor.fetchall()
+            cursor = connection.execute("""
+                SELECT value, count
+                FROM cash_machine
+            """)
 
+            users = cursor.fetchall()
             cash_machine = {i[0]: i[1] for i in users}
 
             return cash_machine

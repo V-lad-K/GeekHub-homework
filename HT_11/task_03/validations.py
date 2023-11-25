@@ -29,7 +29,14 @@ class Validation:
     def login_validation(self, name_argument, password_argument):
         users = self.get_users()
 
-        return any(user.get(name_argument) == password_argument for user in users)
+        return any(user.get(name_argument) == password_argument
+                   for user in users)
+
+    def is_created(self, name_argument, password_argument):
+        users = self.get_users()
+
+        return any(user.get(name_argument) == password_argument
+                   for user in users)
 
     def is_admin(self, name_argument):
         user_id = self.get_user_by_id(name_argument)
