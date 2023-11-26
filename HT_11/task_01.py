@@ -26,31 +26,31 @@ class Calc:
     def __init__(self):
         """initialization"""
         self.last_result = None
-        self.result = None
+
 
     def addition(self, number_1, number_2):
         """
             returns the sum of two values
         """
-        self.last_result = self.result
-        self.result = number_1 + number_2
-        return self.result
+        print("last_result", self.last_result)
+        self.last_result = number_1 + number_2
+        return number_1 + number_2
 
     def subtraction(self, number_1, number_2):
         """
             returns the difference between two values
         """
-        self.last_result = self.result
-        self.result = number_1 - number_2
-        return self.result
+        print("last_result", self.last_result)
+        self.last_result = number_1 - number_2
+        return number_1 - number_2
 
     def multiplication(self, number_1, number_2):
         """
             returns the product of two values
         """
-        self.last_result = self.result
-        self.result = number_1 * number_2
-        return self.result
+        print("last_result", self.last_result)
+        self.last_result = number_1 * number_2
+        return number_1 * number_2
 
     def division(self, number_1, number_2):
         """
@@ -60,28 +60,18 @@ class Calc:
         if number_2 == 0:
             raise ZeroDivision("division on 0")
 
-        self.last_result = self.result
-        self.result = number_1 / number_2
-        return self.result
+        print("last_result", self.last_result)
+        self.last_result = number_1 / number_2
+        return number_1 / number_2
 
 
 try:
     calc = Calc()
 
-    print(calc.addition(1, 2))
-    print("last_result:", calc.last_result)
-
-    print(calc.subtraction(3, 4))
-    print("last_result:", calc.last_result)
-
-    print(calc.division(5, 6))
-    print("last_result:", calc.last_result)
-
-    print(calc.multiplication(7, 8))
-    print("last_result:", calc.last_result)
-
-    print(calc.multiplication(7, 8))
-    print("last_result:", calc.last_result)
+    print(calc.addition(1, 1))
+    print(calc.subtraction(10, 5))
+    print(calc.multiplication(3, 5))
+    print(calc.division(20, 4))
 except ZeroDivision as e:
     print(str(e))
 except ValueError as e:
