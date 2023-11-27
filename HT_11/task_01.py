@@ -27,14 +27,13 @@ class Calc:
         """initialization"""
         self.last_result = None
 
-
     def addition(self, number_1, number_2):
         """
             returns the sum of two values
         """
         print("last_result", self.last_result)
         self.last_result = number_1 + number_2
-        return number_1 + number_2
+        return self.last_result
 
     def subtraction(self, number_1, number_2):
         """
@@ -42,7 +41,7 @@ class Calc:
         """
         print("last_result", self.last_result)
         self.last_result = number_1 - number_2
-        return number_1 - number_2
+        return self.last_result
 
     def multiplication(self, number_1, number_2):
         """
@@ -50,7 +49,7 @@ class Calc:
         """
         print("last_result", self.last_result)
         self.last_result = number_1 * number_2
-        return number_1 * number_2
+        return self.last_result
 
     def division(self, number_1, number_2):
         """
@@ -62,7 +61,7 @@ class Calc:
 
         print("last_result", self.last_result)
         self.last_result = number_1 / number_2
-        return number_1 / number_2
+        return self.last_result
 
 
 try:
