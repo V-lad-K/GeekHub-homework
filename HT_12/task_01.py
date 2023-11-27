@@ -58,13 +58,15 @@ class CashMachine:
     def take_balance(self, name):
         amount = float(input("input the amount you want to take: "))
         balance = self.databese.get_user_balance(name)
-
+        minimum_denomination = self.databese.get_minimum_denomination()
         cash_machine = self.databese.get_cash_machine()
 
         if amount < 0:
             raise NegativeField("withdrawal amount must be positive")
         if amount > balance:
             raise NegativeBalance("withdrawal amount must be < then balance")
+        if amount % minimum_denomination != 0:
+            raise InvalidAction("cash_machine has not enough money or banknotes")
 
         result = self.issue_notes(amount, cash_machine)
 
@@ -78,7 +80,6 @@ class CashMachine:
             get_money = sum([banknote*count for banknote, count in result.items()])
             new_balance = balance - get_money
             self.databese.change_cash_machine(cash_machine)
-            print("cash_machine", cash_machine)
             self.databese.set_user_balance(name, "withdrawalad", get_money,
                                            new_balance)
 
