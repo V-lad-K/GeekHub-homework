@@ -224,7 +224,7 @@ class CashMachine:
                     self.databese.add_user_db(name, password)
                     print("user has been added")
                     self.get_command(self.user_command, name)
-                break
+                    break
             except InvalidUser as e:
                 print(str(e))
                 if count == 3:
