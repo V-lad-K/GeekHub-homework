@@ -21,3 +21,4 @@ new_list.append(4)
 
 print(new_list[1])
 print(new_list[-2])
+print(new_list[-3])
