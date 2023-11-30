@@ -1,6 +1,7 @@
 import sqlite3 as sql
 connection = sql.connect("library")
 
+
 class Database:
     @staticmethod
     def add_user_db(name_argument, password_argument):
@@ -63,8 +64,6 @@ class Database:
             books = [book[0] for book in cursor.fetchall()]
             return books
 
-
-
     @staticmethod
     def get_all_book():
         with connection:
@@ -110,20 +109,15 @@ class Database:
                 WHERE user_id = ? AND book_id = ?
             """, (user_id, book_id))
 
-    def get_user_id(self, name):
+    @staticmethod
+    def get_user_id(name):
         with connection:
             cursor = connection.cursor()
 
             cursor.execute("""
-                SELECT user_id
-                FROM users
-                WHERE name = ?
-            """, (name,))
+            SELECT user_id
+            FROM users
+            WHERE name = ?
+        """, (name,))
 
             return cursor.fetchone()[0]
-
-
-
-#
-db = Database()
-print(db.get_books_by_user(1))
