@@ -38,13 +38,17 @@ class GoogleSpider(scrapy.Spider):
     @staticmethod
     def parse_site_extension(response: Response):
 
-        id_ = (response.css('[property="og:url"]::attr(content)')
-               .get()
-               .split('/')
-               .pop())
+        id_value = (response.css('[property="og:url"]::attr(content)')
+                    .get()
+                    .split('/')
+                    .pop())
+        name_value = response.css('[property="og:title"]::attr(content)').get()
+        brief_description = (response
+                             .css('[property="og:description"]::attr(content)')
+                             .get())
+
         yield {
-            'id': f'{id_}',
-            'name': response.css('[property="og:title"]::attr(content)').get(),
-            'brief_description':
-                response.css('[property="og:description"]::attr(content)').get()
+            'id': f'{id_value}',
+            'name': name_value,
+            'brief_description': brief_description
         }
