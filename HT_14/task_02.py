@@ -6,7 +6,11 @@
 # (або за кожен день у вказаному інтервалі)
 # - не забудьте перевірку на валідність введених даних
 
-from datetime import datetime, timedelta
+from datetime import (
+    datetime,
+    timedelta
+)
+
 import requests
 
 

@@ -16,6 +16,14 @@ def get_soup(url):
     return None
 
 
+def get_born_and_description_by_name(data_list, author):
+    if data_list:
+        for item in data_list:
+            if item[1] == author:
+                return item[2], item[3]
+    return False
+
+
 def get_author_biography(link_author):
     response_biography = requests.get(link_author)
     if response_biography.status_code == 200:
@@ -29,6 +37,7 @@ def get_author_biography(link_author):
 def get_quotes():
     base_url = "https://quotes.toscrape.com/"
     data = [['quote', 'author', 'born', 'description']]
+
     while True:
         print(base_url)
         soup = get_soup(base_url)
@@ -41,12 +50,18 @@ def get_quotes():
             quote_info = quote.select_one('span.text').text
             author_info = quote.select_one('small.author').text
 
-            href_about_author = quote.find("a").get('href')
-            link_author = f"https://quotes.toscrape.com/{href_about_author[1:]}"
+            if not get_born_and_description_by_name(data, author_info):
+                href_about_author = quote.find("a").get('href')
+                link_author = f"https://quotes.toscrape.com/{href_about_author[1:]}"
 
-            born_info, description_info = get_author_biography(link_author)
+                born_info, description_info = get_author_biography(link_author)
+            else:
+                born_info, description_info = get_born_and_description_by_name(data, author_info)
 
-            new_page_info.extend([quote_info, author_info, born_info, description_info])
+            new_page_info.extend([quote_info,
+                                  author_info,
+                                  born_info,
+                                  description_info])
             data.append(new_page_info)
 
         next_li = soup.find('li', class_='next')
