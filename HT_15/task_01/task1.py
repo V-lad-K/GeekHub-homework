@@ -71,7 +71,7 @@ def save_data(category_id_arg, start_index_arg, end_index_arg):
 
 
 try:
-    category_id = 1025184
+    category_id = int(input("input category_id: "))
     start_index = 1
     end_index = 48
 
