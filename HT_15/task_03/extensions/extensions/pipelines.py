@@ -7,7 +7,13 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
+import csv
 
-class ExtensionsPipeline:
-    def process_item(self, item, spider):
+
+class GoogleExtensionPipeline:
+    @staticmethod
+    def process_item(item, spider):
+        with open('data_extensions.csv', "a", newline='', encoding='utf-8') as csv_file:
+            csv_writer = csv.DictWriter(csv_file, fieldnames=['id', 'name', 'brief_description'])
+            csv_writer.writerow(item)
         return item

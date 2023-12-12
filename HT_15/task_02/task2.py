@@ -39,7 +39,6 @@ def get_page_domain(start, session_arg, header_arg):
         tds = soup.select("td.field_domain")
         domain_list_on_page = []
         if not tds:
-            print("need login")
             return []
         for td in tds:
             domain_list_on_page.append(td.a.text)
@@ -47,7 +46,7 @@ def get_page_domain(start, session_arg, header_arg):
         return domain_list_on_page
 
 
-def get_all_domains(session_arg, header_arg):
+def save_domains(session_arg, header_arg):
     data = ['Domain']
     start = 0
     page_count = 0
@@ -55,10 +54,10 @@ def get_all_domains(session_arg, header_arg):
         print(f"Page{page_count}")
         time.sleep(DELAY)
         get_data = get_page_domain(start, session_arg, header_arg)
-        data.extend(get_data)
-        save_csv_file(data)
         if not get_data:
             return
+        data.extend(get_data)
+        save_csv_file(data)
         start += 25
         page_count += 1
 
@@ -73,4 +72,4 @@ def save_csv_file(data_argument):
 
 
 session, header = get_session_header()
-get_all_domains(session, header)
+save_domains(session, header)
