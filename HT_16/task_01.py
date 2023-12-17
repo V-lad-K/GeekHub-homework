@@ -99,8 +99,14 @@ class Robot:
 
         input_elements = self.driver.find_elements(By.CLASS_NAME, "form-control")
 
-        head_element = self.driver.find_element(By.XPATH, f"//option[@value={head_value}]")
-        body_element = self.driver.find_element(By.XPATH, f"//input[@value={body_value}]/ancestor::label")
+        head_element = self.driver.find_element(
+            By.XPATH,
+            f"//option[@value={head_value}]"
+        )
+        body_element = self.driver.find_element(
+            By.XPATH,
+            f"//input[@value={body_value}]/ancestor::label"
+        )
         legs_element = input_elements[0]
         address_element = input_elements[1]
 
@@ -112,8 +118,14 @@ class Robot:
     def click_make_preview(self):
         try:
             while True:
-                preview_button = self.driver.find_element(By.XPATH, f'//button[@id="preview"]')
-                self.driver.execute_script("arguments[0].click();", preview_button)
+                preview_button = self.driver.find_element(
+                    By.XPATH,
+                    f'//button[@id="preview"]'
+                )
+                self.driver.execute_script(
+                    "arguments[0].click();",
+                    preview_button
+                )
                 xpath = "//div[@id='robot-preview-image']"
                 image = self.wait_element(xpath).find_element(By.XPATH, xpath)
                 if image:
@@ -124,8 +136,14 @@ class Robot:
     def click_make_order(self):
         try:
             while True:
-                order_button = self.driver.find_element(By.XPATH, '//button[@id="order"]')
-                self.driver.execute_script("arguments[0].click();", order_button)
+                order_button = self.driver.find_element(
+                    By.XPATH,
+                    '//button[@id="order"]'
+                )
+                self.driver.execute_script(
+                    "arguments[0].click();",
+                    order_button
+                )
         except Exception:
             pass
 
