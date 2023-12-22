@@ -30,15 +30,17 @@
 #     директорію output. Окремо зображення робота зберігати не потрібно.
 #     Тобто замість зображень у вас будуть pdf файли які містять
 #     зображення з чеком.
+import csv
+import time
 
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from PIL import Image
-from io import BytesIO
+from io import StringIO
 from pathlib import Path
 
 import requests
@@ -56,7 +58,7 @@ HEIGHT_IMAGE = 200
 class Robot:
     def __init__(self):
         self.file_path = DIR_PATH
-        self.current_picture = None
+        self.current_picture_path = None
         self.driver = webdriver.Chrome(service=SERVICE)
         self.driver.get(BASE_URL)
         self.remove_output()
@@ -92,10 +94,10 @@ class Robot:
         close_button.click()
 
     def build_order(self, data_arg):
-        head_value = data_arg[0]
-        body_value = data_arg[1]
-        legs_value = data_arg[2]
-        address_value = data_arg[3]
+        head_value = data_arg["Head"]
+        body_value = data_arg["Body"]
+        legs_value = data_arg["Legs"]
+        address_value = data_arg["Address"]
 
         input_elements = self.driver.find_elements(By.CLASS_NAME, "form-control")
 
@@ -116,8 +118,8 @@ class Robot:
         address_element.send_keys(address_value)
 
     def click_make_preview(self):
-        try:
-            while True:
+        while True:
+            try:
                 preview_button = self.driver.find_element(
                     By.XPATH,
                     f'//button[@id="preview"]'
@@ -130,12 +132,12 @@ class Robot:
                 image = self.wait_element(xpath).find_element(By.XPATH, xpath)
                 if image:
                     break
-        except Exception:
-            pass
+            except NoSuchElementException:
+                break
 
     def click_make_order(self):
-        try:
-            while True:
+        while True:
+            try:
                 order_button = self.driver.find_element(
                     By.XPATH,
                     '//button[@id="order"]'
@@ -144,47 +146,31 @@ class Robot:
                     "arguments[0].click();",
                     order_button
                 )
-        except Exception:
-            pass
+            except NoSuchElementException:
+                break
 
     def get_order_check(self):
         xpath = "//p[@class='badge badge-success']"
         check = self.wait_element(xpath)
         return check.find_element(By.XPATH, xpath).text
 
-    def make_picture(self, data_arg):
-        head_value = data_arg[0]
-        body_value = data_arg[1]
-        legs_value = data_arg[2]
+    def scroll_down(self):
+        main_container_xpath = "//div[@class='container main-container']"
+        main_container = self.driver.find_element(By.XPATH, main_container_xpath)
+        self.driver.execute_script("arguments[0].scrollIntoView();", main_container)
 
-        image_urls = [
-            f"https://robotsparebinindustries.com/heads/{head_value}.png",
-            f"https://robotsparebinindustries.com/bodies/{body_value}.png",
-            f"https://robotsparebinindustries.com/legs/{legs_value}.png"
-        ]
-
-        images = []
-        for url in image_urls:
-            response = requests.get(url)
-
-            img = Image.open(BytesIO(response.content))
-            img_resized = img.resize((HEIGHT_IMAGE, HEIGHT_IMAGE))
-            images.append(img_resized)
-
-        widths, heights = zip(*(i.size for i in images))
-        combined_image = Image.new('RGB', (max(widths), sum(heights)))
-
-        y_offset = 0
-        for img in images:
-            combined_image.paste(img, (0, y_offset))
-            y_offset += img.size[1]
-
-        self.current_picture = combined_image
-    
     def save_picture(self):
+        self.scroll_down()
+
+        xpath_element = "//div[@id='robot-preview-image']"
         check = self.get_order_check()
         file_name = f"output/{check}_robot.jpg"
-        self.current_picture.save(file_name)
+
+        self.current_picture_path = str(Path(__file__)
+                                        .resolve().parent / file_name)
+        time.sleep(2)
+        robot_photo = self.driver.find_element(By.XPATH, xpath_element)
+        robot_photo.screenshot(file_name)
     
     def make_all_orders(self):
         data = self.get_data_orders(BASE_URL)
@@ -192,7 +178,6 @@ class Robot:
             self.close_modal_window()
             self.build_order(data_item)
             self.click_make_preview()
-            self.make_picture(data_item)
             self.click_make_order()
             self.save_picture()
             self.click_another_robot()
@@ -210,19 +195,12 @@ class Robot:
 
     @staticmethod
     def get_data_orders(url):
-        csv_file = []
-
         csv_url = "orders.csv"
         request_url = url + csv_url
         response = requests.get(url=request_url)
-        csv_list = response.text.split("\n")
-        csv_list.pop(0)
+        csv_reader = csv.DictReader(StringIO(response.text))
 
-        for item in csv_list:
-            new_list = item.split(",")[1:]
-            csv_file.append(new_list)
-
-        return csv_file
+        return list(csv_reader)
 
     def __del__(self):
         self.driver.quit()

@@ -40,11 +40,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from io import StringIO
 from pathlib import Path
+from xhtml2pdf import pisa
 
 import requests
 import os
 import shutil
-import pdfkit
 import csv
 import time
 
@@ -59,9 +59,8 @@ HEIGHT_IMAGE = 200
 class Robot:
     def __init__(self):
         self.file_path = DIR_PATH
-        self.current_picture = None
+        # self.current_picture = None
         self.current_picture_path = None
-        self.div_img = None
         self.driver = webdriver.Chrome(service=SERVICE)
         self.driver.get(BASE_URL)
         self.remove_output()
@@ -171,7 +170,7 @@ class Robot:
 
         self.current_picture_path = str(Path(__file__)
                                         .resolve().parent / file_name)
-        time.sleep(1)
+        time.sleep(2)
         robot_photo = self.driver.find_element(By.XPATH, xpath_element)
         robot_photo.screenshot(file_name)
 
@@ -191,16 +190,13 @@ class Robot:
         return receipt_html
 
     def save_to_pdf(self):
-        path_wkhtmltopdf = str(Path(__file__).resolve().parent
-                               / 'wkhtmltopdf'
-                               / 'bin' / 'wkhtmltopdf.exe')
-        config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-
         check = self.get_order_check()
         file_name = f"output2/{check}_robot.pdf"
-        html_content = self.get_receipt_html() + self.get_picture_html()
-        pdfkit.from_string(html_content, file_name, configuration=config)
-
+        with open(file_name, "w+b") as result_file:
+            html_content = self.get_receipt_html() + self.get_picture_html()
+            pisa.CreatePDF(
+                html_content,
+                dest=result_file)
         os.remove(self.current_picture_path)
 
     def make_all_orders(self):
