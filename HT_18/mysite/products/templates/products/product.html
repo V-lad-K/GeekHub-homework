@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <h1>Product</h1>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.brand_name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.product_link }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{% url 'add_product'%}">Add product</a>
+    <a href="{% url 'my_products'%}">My products</a>
+</body>
+</html>

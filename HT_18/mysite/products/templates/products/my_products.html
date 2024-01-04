@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>All Products</h1>
+    <ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td><a href="{% url 'product' product.product_id %}">Details</a></td>
+                    </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </ul>
+
+    <a href="{% url 'add_product'%}">Add product</a>
+</body>
+</html>
