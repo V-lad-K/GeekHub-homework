@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
+    <h3>add example: A102095621 or A062211844,(space) A102095621</h3>
     <form action="{% url 'add_product' %}" method="post">
         {% csrf_token %}
         {{form.as_p}}
