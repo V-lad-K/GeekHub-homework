@@ -57,51 +57,25 @@ def get_product_data(product_id_arg: str):
     return
 
 
-def get_unique_names_from_scraping_task():
-    unique_name_list = set()
-    model_names = ScrapingTask.objects.values_list('name', flat=True)
-    for model_name in model_names:
-        name_list = model_name.split(", ")
-        unique_name_list.update(name_list)
-
-    return list(unique_name_list)
-
-
 def save_task(product_id_arg):
-    existing_tasks = ScrapingTask.objects.filter(name=product_id_arg)
-    if not existing_tasks.exists():
-        ScrapingTask.objects.create(name=product_id_arg)
+    ScrapingTask.objects.update_or_create(name=product_id_arg)
 
 
 def save_product(product_id_arg):
     name_list = product_id_arg.split(", ")
-    unique_names = get_unique_names_from_scraping_task()
 
-    for name in name_list:
-        data_scraper_fixed = get_product_data(product_id_arg)
+    for _ in name_list:
+        scraper_data = get_product_data(product_id_arg)
 
-        if data_scraper_fixed is not None:
-            if name in unique_names:
-                existing_product = Product.objects.get(product_id=name)
-
-                existing_product.name = data_scraper_fixed["name"]
-                existing_product.price = data_scraper_fixed["price"]
-                existing_product.brand_name = data_scraper_fixed["brand_name"]
-                existing_product.category = data_scraper_fixed["category"]
-                existing_product.product_link = data_scraper_fixed["product_link"]
-                existing_product.short_description = data_scraper_fixed["short_description"]
-
-                existing_product.save()
-            else:
-                Product.objects.create(
-                    name=data_scraper_fixed["name"],
-                    price=data_scraper_fixed["price"],
-                    short_description=data_scraper_fixed["short_description"],
-                    brand_name=data_scraper_fixed["brand_name"],
-                    category=data_scraper_fixed["category"],
-                    product_link=data_scraper_fixed["product_link"],
-                    product_id=data_scraper_fixed["product_id"],
-                )
+        Product.objects.update_or_create(
+            name=scraper_data["name"],
+            price=scraper_data["price"],
+            short_description=scraper_data["short_description"],
+            brand_name=scraper_data["brand_name"],
+            category=scraper_data["category"],
+            product_link=scraper_data["product_link"],
+            product_id=scraper_data["product_id"],
+        )
 
 
 product_id = sys.argv[1]

@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>Product</h1>
+{% endblock %}
+
+{% block content %}
     <table>
-        <h1>Product</h1>
         <thead>
             <tr>
                 <th>Name</th>
@@ -26,8 +25,9 @@
             </tr>
         </tbody>
     </table>
+{% endblock %}
 
+{% block sidebar %}
     <a href="{% url 'add_product'%}">Add product</a>
-    <a href="{% url 'my_products'%}">My products</a>
-</body>
-</html>
+    <a href="{% url 'products'%}">My products</a>
+{% endblock %}

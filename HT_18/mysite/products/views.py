@@ -6,7 +6,7 @@ from .models import Product
 import subprocess
 
 
-def product(request, product_id):
+def detail_product(request, product_id):
     product_context = Product.objects.get(product_id=product_id)
     context = {
         "product": product_context
@@ -14,10 +14,10 @@ def product(request, product_id):
     return render(request, "products/product.html", context)
 
 
-def my_products(request):
-    products = Product.objects.values('name', 'price', "product_id")
+def products(request):
+    my_products = Product.objects.values('name', 'price', "product_id")
     context = {
-        "products": products
+        "products": my_products
     }
     return render(request, "products/my_products.html", context)
 
