@@ -67,15 +67,17 @@ def save_product(product_id_arg):
     for _ in name_list:
         scraper_data = get_product_data(product_id_arg)
 
-        Product.objects.update_or_create(
-            name=scraper_data["name"],
-            price=scraper_data["price"],
-            short_description=scraper_data["short_description"],
-            brand_name=scraper_data["brand_name"],
-            category=scraper_data["category"],
-            product_link=scraper_data["product_link"],
-            product_id=scraper_data["product_id"],
-        )
+        if scraper_data is not None:
+
+            Product.objects.update_or_create(
+                name=scraper_data["name"],
+                price=scraper_data["price"],
+                short_description=scraper_data["short_description"],
+                brand_name=scraper_data["brand_name"],
+                category=scraper_data["category"],
+                product_link=scraper_data["product_link"],
+                product_id=scraper_data["product_id"],
+            )
 
 
 product_id = sys.argv[1]

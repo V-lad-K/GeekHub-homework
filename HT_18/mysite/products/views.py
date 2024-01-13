@@ -7,7 +7,7 @@ import subprocess
 
 
 def detail_product(request, product_id):
-    product_context = Product.objects.get(product_id=product_id)
+    product_context = Product.objects.get_object_or_404(product_id=product_id)
     context = {
         "product": product_context
     }
