@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from .forms import AddScrapingTaskForm
 from .models import Product
 
@@ -7,7 +8,7 @@ import subprocess
 
 
 def detail_product(request, product_id):
-    product_context = Product.objects.get_object_or_404(product_id=product_id)
+    product_context = get_object_or_404(Product, product_id=product_id)
     context = {
         "product": product_context
     }
