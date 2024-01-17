@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{% url 'add_product' %}" method="post">
+    <form action="{% url 'products:add_product' %}" method="post">
         {% csrf_token %}
         {{form.as_p}}
 
@@ -14,6 +14,5 @@
 {% endblock %}
 
 {% block sidebar %}
-    <a href="{% url 'products'%}">My products</a>
-    <a href="{% url 'checkout'%}">checkout</a>
+    <a href="{% url 'products:products'%}">My products</a>
 {% endblock %}

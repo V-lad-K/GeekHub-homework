@@ -25,12 +25,12 @@
                         </div>
                     </td>
                     <td>{{ product.price }}</td>
-                    <td><a href="{% url 'detail_product' product.product_id %}">Details</a></td>
+                    <td><a href="{% url 'products:detail_product' product.product_id %}">Details</a></td>
                     <td>
                         <input type="button" value="-"
                            onclick="decreaseQuantity('quantity_{{ product.product_id }}')"
                         >
-                        <form action="{% url 'products' %}" method="post">
+                        <form action="{% url 'products:products' %}" method="post">
                             {% csrf_token %}
                             <div class="productCountWrapper">
                                 <input type="hidden" name="product_id" value="{{ product.product_id }}">
@@ -55,8 +55,8 @@
 {% endblock %}
 
 {% block sidebar %}
-    <a href="{% url 'add_product'%}">Add product</a>
-    <a href="{% url 'checkout'%}">checkout</a>
+    <a href="{% url 'products:add_product'%}">Add product</a>
+    <a href="{% url 'checkout:checkout'%}">checkout</a>
 {% endblock %}
 
 
