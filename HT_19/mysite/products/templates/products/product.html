@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>Product</h1>
+{% endblock %}
+
+{% block content %}
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Brand</th>
+                <th>Category</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.brand_name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.product_link }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block sidebar %}
+    <a href="{% url 'add_product'%}">Add product</a>
+    <a href="{% url 'products'%}">My products</a>
+{% endblock %}
