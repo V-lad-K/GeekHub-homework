@@ -55,11 +55,7 @@ def add_product(request):
         form = AddScrapingTaskForm(request.POST)
         if form.is_valid():
             product_id = form.cleaned_data.get("name")
-            name_list = product_id.split(", ")
-
-            for name in name_list:
-                subprocess.Popen(['python', 'scraper.py', name])
-
+            subprocess.Popen(['python', 'scraper.py', product_id])
             return redirect("products:add_product")
     else:
         form = AddScrapingTaskForm()

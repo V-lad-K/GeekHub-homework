@@ -57,15 +57,16 @@ def get_product_data(product_id_arg: str):
     return
 
 
-def save_task(product_id_arg):
-    ScrapingTask.objects.update_or_create(name=product_id_arg)
+def save_task(product_ids_arg):
+    product_ids_list = product_ids_arg.split(", ")
+    for id_product in product_ids_list:
+        ScrapingTask.objects.update_or_create(name=id_product)
 
 
-def save_product(product_id_arg):
-    name_list = product_id_arg.split(", ")
-
-    for _ in name_list:
-        scraper_data = get_product_data(product_id_arg)
+def save_product(product_ids_arg):
+    product_ids_list = product_ids_arg.split(", ")
+    for id_product in product_ids_list:
+        scraper_data = get_product_data(id_product)
 
         if scraper_data is not None:
             Product.objects.update_or_create(
@@ -80,6 +81,5 @@ def save_product(product_id_arg):
 
 
 product_id = sys.argv[1]
-
 save_product(product_id)
 save_task(product_id)
