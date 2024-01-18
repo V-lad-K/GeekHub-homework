@@ -7,7 +7,7 @@ from .views import add_product
 app_name = 'products'
 
 urlpatterns = [
-    path('products/<str:product_id>/', detail_product, name='detail_product'),
     path('add_product/', add_product, name="add_product"),
-    path('products/', products, name='products'),
+    path('<str:product_id>/', detail_product, name='detail_product'),
+    path('', products, name='products'),
 ]

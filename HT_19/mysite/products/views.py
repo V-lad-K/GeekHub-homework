@@ -60,7 +60,7 @@ def add_product(request):
             for name in name_list:
                 subprocess.Popen(['python', 'scraper.py', name])
 
-            return redirect("add_product")
+            return redirect("products:add_product")
     else:
         form = AddScrapingTaskForm()
     return render(request, "products/add_product.html", {"form": form})
