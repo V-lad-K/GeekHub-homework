@@ -3,7 +3,6 @@ import os
 import django
 import requests
 
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project_name.settings')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
 django.setup()
 
