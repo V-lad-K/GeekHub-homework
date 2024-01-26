@@ -13,10 +13,6 @@
         {%  csrf_token%}
         {{form.as_p}}
 
-        <button type="submit">Add</button>
+        <button type="submit">Log in</button>
     </form>
-{% endblock %}
-
-{% block sidebar %}
-   <a href="{% url 'products:products'%}">My products</a>
 {% endblock %}

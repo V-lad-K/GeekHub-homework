@@ -14,6 +14,7 @@ from django.contrib import messages
 
 import subprocess
 import time
+import json
 
 
 def detail_product(request, product_id):
@@ -65,7 +66,8 @@ def products(request):
 
     context = {
         "products": my_products,
-        "categories": categories
+        "categories": categories,
+        "user": user
     }
     return render(request, "products/my_products.html", context)
 
@@ -77,7 +79,7 @@ def add_product(request):
             form = AddScrapingTaskForm(request.POST)
             if form.is_valid():
                 product_id = form.cleaned_data.get("name")
-                subprocess.Popen(['python', 'scraper.py', product_id])
+                subprocess.Popen(['python', 'save_data.py', product_id])
                 return redirect("products:add_product")
         else:
             form = AddScrapingTaskForm()
@@ -142,17 +144,26 @@ def edit_product_view(request, product_id):
             command = form.cleaned_data.get("command")
             match command:
                 case "EditProduct":
-                    product.name = form.cleaned_data.get("name")
-                    product.price = form.cleaned_data.get("price")
-                    product.short_description = form.cleaned_data.get("short_description")
-                    product.brand_name = form.cleaned_data.get("brand_name")
-                    product.category_id = form.cleaned_data.get("category_id")
-                    product.product_link = form.cleaned_data.get("product_link")
-                    scraping_task.name = product.product_id
+                    category_name = form.cleaned_data.get("category_id")
+                    defaults_data = {
+                        'name': form.cleaned_data.get("name"),
+                        'price': form.cleaned_data.get("price"),
+                        "short_description": form.cleaned_data.get("short_description"),
+                        "brand_name": form.cleaned_data.get("brand_name"),
+                        "product_link": form.cleaned_data.get("product_link"),
+                    }
+                    defaults_data_str = json.dumps(defaults_data)
 
-                    product.save()
-                    scraping_task.save()
-
+                    subprocess.Popen(
+                        [
+                            'python',
+                            'update_data.py',
+                            product_id,
+                            defaults_data_str,
+                            str(category_name)
+                        ]
+                    )
+                    time.sleep(2)
                     return redirect(
                         'products:edit_product',
                         product_id=product_id
@@ -163,7 +174,7 @@ def edit_product_view(request, product_id):
 
                     return redirect('products:products')
                 case "ScrapingUpdate":
-                    subprocess.Popen(['python', 'scraper.py', product_id])
+                    subprocess.Popen(['python', 'save_data.py', product_id])
                     time.sleep(2)
                     return redirect(
                         'products:edit_product',
