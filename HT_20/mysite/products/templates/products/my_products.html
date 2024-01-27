@@ -77,7 +77,10 @@
     {% if user.is_superuser %}
         <a href="{% url 'products:add_product'%}">Add product</a>
     {% endif %}
-    <a href="{% url 'checkout:checkout'%}">checkout</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'checkout:checkout'%}">checkout</a>
+    {% endif %}
+    
 {% endblock %}
 
 
