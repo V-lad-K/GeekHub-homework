@@ -25,28 +25,31 @@
                     </td>
                     <td>{{ product.price }}</td>
                     <td><a href="{% url 'products:detail_product' product.product_id %}">Details</a></td>
-                    <td>
-                        <input type="button" value="-"
-                           onclick="decreaseQuantity('quantity_{{ product.product_id }}')"
-                        >
-                        <form action="{% url 'products:products_by_category' category %}" method="post">
-                            {% csrf_token %}
-                            <div class="productCountWrapper">
-                                <input type="hidden" name="product_id" value="{{ product.product_id }}">
-                                <input type="hidden" name="command" value="Add">
-                                <input id="quantity_{{ product.product_id }}"
-                                   name="quantity"
-                                   value="1"
-                                   min="1"
-                                   readonly
-                                >
-                                <button type="submit">add to checkout</button>
-                            </div>
-                        </form>
-                        <input type="button" value="+"
-                           onclick="increaseQuantity('quantity_{{ product.product_id }}')"
-                        >
-                    </td>
+                    {% if user.is_authenticated %}
+                        <td>
+                            <input type="button" value="-"
+                               onclick="decreaseQuantity('quantity_{{ product.product_id }}')"
+                            >
+                            <form action="{% url 'products:products_by_category' category %}" method="post">
+                                {% csrf_token %}
+                                <div class="productCountWrapper">
+                                    <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                                    <input type="hidden" name="command" value="Add">
+                                    <input id="quantity_{{ product.product_id }}"
+                                       name="quantity"
+                                       value="1"
+                                       min="1"
+                                       readonly
+                                    >
+                                    <button type="submit">add to checkout</button>
+                                </div>
+                            </form>
+                            <input type="button" value="+"
+                               onclick="increaseQuantity('quantity_{{ product.product_id }}')"
+                            >
+                        </td>
+                    {% endif %}
+                    
                 </tr>
             {% endfor %}
         </tbody>
