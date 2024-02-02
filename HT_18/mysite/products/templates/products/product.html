@@ -28,6 +28,6 @@
 {% endblock %}
 
 {% block sidebar %}
-    <a href="{% url 'add_product'%}">Add product</a>
-    <a href="{% url 'products'%}">My products</a>
+    <a href="{% url 'products:add_product'%}">Add product</a>
+    <a href="{% url 'products:products'%}">My products</a>
 {% endblock %}

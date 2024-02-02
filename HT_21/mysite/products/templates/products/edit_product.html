@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block header %}
@@ -40,4 +41,48 @@
 
 {% block sidebar %}
     <a href="{% url 'products:products'%}">My products</a>
+=======
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>Edit Product</h1>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'products:edit_product' product.product_id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="command" value="EditProduct">
+        <button type="submit">EDIT</button>
+    </form>
+
+    <form action="{% url 'products:edit_product' product.product_id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="name" value="{{product.name}}">
+        <input type="hidden" name="price" value="{{product.price}}">
+        <input type="hidden" name="short_description" value="{{product.short_description}}">
+        <input type="hidden" name="brand_name" value="{{product.brand_name}}">
+        <input type="hidden" name="product_link" value="{{product.product_link}}">
+        <input type="hidden" name="product_id" value="{{product.product_id}}">
+        <input type="hidden" name="command" value="DeleteProduct">
+
+        <button type="submit">Delete</button>
+    </form>
+
+    <form action="{% url 'products:edit_product' product.product_id %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="name" value="{{product.name}}">
+        <input type="hidden" name="price" value="{{product.price}}">
+        <input type="hidden" name="short_description" value="{{product.short_description}}">
+        <input type="hidden" name="brand_name" value="{{product.brand_name}}">
+        <input type="hidden" name="product_link" value="{{product.product_link}}">
+        <input type="hidden" name="product_id" value="{{product.product_id}}">
+        <input type="hidden" name="command" value="ScrapingUpdate">
+        <button type="submit">ScrapingUpdate</button>
+    </form>
+{% endblock %}
+
+{% block sidebar %}
+    <a href="{% url 'products:products'%}">My products</a>
+>>>>>>> 970411dd3de5ed996f005820fcc60d8b4bc41da5
 {% endblock %}

@@ -68,7 +68,6 @@ def save_product(product_id_arg):
         scraper_data = get_product_data(product_id_arg)
 
         if scraper_data is not None:
-
             Product.objects.update_or_create(
                 name=scraper_data["name"],
                 price=scraper_data["price"],

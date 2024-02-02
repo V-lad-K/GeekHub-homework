@@ -2,6 +2,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from .forms import AddScrapingTaskForm
+from .forms import AddToCheckout
 from .models import Product
 
 import subprocess
@@ -16,7 +17,32 @@ def detail_product(request, product_id):
 
 
 def products(request):
+    if request.method == "POST":
+        form = AddToCheckout(request.POST)
+        if form.is_valid():
+            quantity = form.cleaned_data.get("quantity")
+            product_id = form.cleaned_data.get("product_id")
+            session_product = request.session[product_id]
+            order_list = request.session.get("order") or []
+
+            found_product = next((product for product in order_list
+                                  if session_product["name"] == product["name"]),
+                                 None)
+
+            if found_product:
+                found_product["quantity"] += quantity
+            else:
+                order_list.append({**session_product, "quantity": quantity})
+
+            request.session["order"] = order_list
+            request.session.modified = True
+
     my_products = Product.objects.values('name', 'price', "product_id")
+
+    for product in my_products:
+        request.session[product["product_id"]] = product
+        request.session.modified = True
+
     context = {
         "products": my_products
     }

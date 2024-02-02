@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'base.html' %}
 
 {% block header %}
@@ -15,4 +16,23 @@
 
         <button type="submit">Log in</button>
     </form>
+=======
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>Login</h1>
+{% endblock %}
+
+{% block content %}
+    {% for message in messages %}
+        {{ message }}
+    {% endfor %}
+
+    <form method="post">
+        {%  csrf_token%}
+        {{form.as_p}}
+
+        <button type="submit">Log in</button>
+    </form>
+>>>>>>> 970411dd3de5ed996f005820fcc60d8b4bc41da5
 {% endblock %}
