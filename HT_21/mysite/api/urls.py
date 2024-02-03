@@ -5,6 +5,7 @@ from .views import ProductByCategoryRetrieveAPIView
 from .views import CheckoutContentListAPIView
 from .views import UpdateDeleteCheckoutAPIView
 from .views import ProductDetailRetrieveAPIView
+from .views import DeleteAllProductsAPIView
 
 app_name = 'api'
 
@@ -24,6 +25,8 @@ urlpatterns = [
          name="api_add_product_in_checkout_from_products"),
     path("checkout/",
          CheckoutContentListAPIView.as_view(), name="api_checkout_content"),
+    path("checkout/delete_all/",
+         DeleteAllProductsAPIView.as_view(), name="api_checkout_delete_all"),
     path("checkout/<str:product_id>/",
          UpdateDeleteCheckoutAPIView.as_view(),
          name="api_delete_product_in_checkout_from_checkout"),

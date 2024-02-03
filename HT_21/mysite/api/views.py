@@ -67,6 +67,24 @@ class ProductByCategoryRetrieveAPIView(RetrieveAPIView):
         return Response(serializer.data)
 
 
+class DeleteAllProductsAPIView(APIView):
+    """
+        API class that allows you to delete all
+        products in the checkout
+    """
+    def delete(self, request):
+        try:
+            order_list = []
+            request.session["order"] = order_list
+            request.session.modified = True
+
+            return Response({
+                "message": "All products were removed from checkout."
+            })
+        except KeyError as e:
+            return Response({"error": str(e)})
+
+
 class UpdateDeleteCheckoutAPIView(APIView):
     """
         API class that allows you to update or delete
