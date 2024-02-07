@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block head %}
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'products/js/products.js' %}"></script>
+    <script src="{% static 'products/js/add_to_checkout_product.js' %}"></script>
 {% endblock %}
 
 {% block header %}
@@ -87,10 +87,4 @@
         <a href="{% url 'checkout:checkout'%}">checkout</a>
     {% endif %}
     
-{% endblock %}
-
-
-{% block scriptjs %}
-    <script src="{% static 'products/js/products.js' %}"></script>
-    <script src="{% static 'products/js/add_to_checkout_product.js' %}"></script>
 {% endblock %}

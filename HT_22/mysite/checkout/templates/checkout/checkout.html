@@ -2,9 +2,11 @@
 {% load static %}
 
 {% block head %}
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'products/js/products.js' %}"></script>
+    <script src="{% static 'checkout/js/checkout_change_quantity_product.js' %}"></script>
+    <script src="{% static 'checkout/js/checkout_delete_product.js' %}"></script>
+    <script src="{% static 'checkout/js/checkout_delete_all_products.js' %}"></script>
 {% endblock %}
 
 {% block header %}
@@ -72,11 +74,4 @@
 
 {% block sidebar %}
     <a href="{% url 'products:products'%}">My products</a>
-{% endblock %}
-
-{% block scriptjs %}
-    <script src="{% static 'products/js/products.js' %}"></script>
-    <script src="{% static 'checkout/js/checkout_change_quantity_product.js' %}"></script>
-    <script src="{% static 'checkout/js/checkout_delete_product.js' %}"></script>
-    <script src="{% static 'checkout/js/checkout_delete_all_products.js' %}"></script>
 {% endblock %}

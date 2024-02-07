@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block head %}
+    <script src="{% static 'products/js/products.js' %}"></script>
+{% endblock %}
+
 {% block header %}
     <h1> Category {{category}}</h1>
 {% endblock %}
@@ -62,8 +66,4 @@
         <a href="{% url 'checkout:checkout'%}">checkout</a>
     {% endif %}
    
-{% endblock %}
-
-{% block scriptjs %}
-    <script src="{% static 'products/js/products.js' %}"></script>
 {% endblock %}
