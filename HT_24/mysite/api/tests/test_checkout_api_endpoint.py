@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from .factories import ProductCheckoutFactory
 
 
-class UpdateDeleteCheckoutAPIViewTestCase(APITestCase):
+class CheckoutTestCase(APITestCase):
     def setUp(self):
         self.product_checkout_1 = ProductCheckoutFactory()
         self.product_checkout_2 = ProductCheckoutFactory()
